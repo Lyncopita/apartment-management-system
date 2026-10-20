@@ -1,0 +1,540 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --navy: #101c38;
+  --blue: #315efb;
+  --green: #16a765;
+  --red: #ed3548;
+  --purple: #6546e8;
+  --bg: #f1f4fa;
+  --text: #25324a;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.app {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 245px;
+  flex-shrink: 0;
+  background: linear-gradient(180deg, #142440, #081327);
+  color: white;
+  padding: 22px 13px;
+  min-height: 100vh;
+}
+
+.sidebar h2 {
+  font-size: 21px;
+  padding: 10px 7px 28px;
+  border-bottom: 1px solid #293954;
+  margin-bottom: 22px;
+}
+
+.menu-label {
+  font-size: 10px;
+  color: #9cabc4;
+  letter-spacing: 1.5px;
+  padding: 0 10px 12px;
+}
+
+.nav {
+  display: block;
+  width: 100%;
+  padding: 13px 11px;
+  margin: 5px 0;
+  border: none;
+  border-radius: 8px;
+  color: #dce5f6;
+  background: transparent;
+  text-align: left;
+  font-size: 13px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.nav:hover,
+.nav.active {
+  background: linear-gradient(100deg, #345bf5, #6148d9);
+  color: white;
+  box-shadow: 0 5px 15px #0002;
+}
+
+.main {
+  flex: 1;
+  min-width: 0;
+  padding: 25px;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 25px;
+}
+
+.topbar small {
+  color: #71809a;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+
+.topbar h2 {
+  margin-top: 7px;
+  font-size: 25px;
+}
+
+.topbar span {
+  background: white;
+  border-radius: 25px;
+  padding: 11px 15px;
+  font-size: 13px;
+  box-shadow: 0 3px 15px #172c5010;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.card {
+  background: white;
+  padding: 21px 18px;
+  border-radius: 13px;
+  box-shadow: 0 4px 18px #253d6510;
+  border: 1px solid #e9edf5;
+}
+
+.card p,
+.rent-card p {
+  color: #738099;
+  font-size: 12px;
+  margin-bottom: 12px;
+}
+
+.card h2 {
+  font-size: 30px;
+  color: #172640;
+}
+
+.rent-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 15px;
+  margin-bottom: 22px;
+}
+
+.rent-card {
+  padding: 18px;
+  border-radius: 12px;
+  color: white;
+  box-shadow: 0 5px 15px #172c5015;
+}
+
+.rent-card p {
+  color: #ffffffdf;
+}
+
+.rent-card h2 {
+  font-size: 24px;
+  overflow-wrap: anywhere;
+}
+
+.pending {
+  background: linear-gradient(120deg, #159957, #38bd78);
+}
+
+.overdue {
+  background: linear-gradient(120deg, #e52d43, #ff5965);
+}
+
+.collected {
+  background: linear-gradient(120deg, #2455d9, #507dff);
+}
+
+.panel {
+  background: white;
+  padding: 23px;
+  margin-bottom: 22px;
+  border-radius: 13px;
+  box-shadow: 0 4px 18px #253d6510;
+  border: 1px solid #e9edf5;
+}
+
+.panel h3 {
+  font-size: 17px;
+  margin-bottom: 18px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.actions button,
+.form button {
+  background: var(--purple);
+  color: white;
+  border: none;
+  padding: 12px 16px;
+  border-radius: 7px;
+  font-weight: bold;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.actions button:nth-child(2) {
+  background: #315efb;
+}
+
+.actions button:nth-child(3) {
+  background: #149f9b;
+}
+
+.actions button:nth-child(4) {
+  background: #1683d8;
+}
+
+.actions button:hover,
+.form button:hover {
+  opacity: 0.85;
+}
+
+.note {
+  background: #edf2ff;
+  color: #4b5f88;
+  padding: 13px;
+  border-radius: 7px;
+  font-size: 12px;
+  line-height: 1.6;
+  margin-top: 18px;
+}
+
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  min-width: 430px;
+}
+
+th {
+  background: #f0f4fc;
+  color: #566680;
+  text-align: left;
+}
+
+th,
+td {
+  padding: 14px 12px;
+  border-bottom: 1px solid #e9edf5;
+}
+
+td {
+  color: #43516b;
+}
+
+.status {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  background: #d9f8e8;
+  color: #087c45;
+}
+
+.status.occupied {
+  background: #ffe0e3;
+  color: #bd2035;
+}
+
+.status.cleaning {
+  background: #fff0ca;
+  color: #946100;
+}
+
+.form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 15px;
+}
+
+.form label {
+  display: block;
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 7px;
+}
+
+.form input,
+.form select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #dce3ef;
+  border-radius: 7px;
+  font-size: 14px;
+  background: white;
+  color: #25324a;
+}
+
+.form .full {
+  grid-column: 1 / -1;
+}
+
+.form button {
+  width: fit-content;
+}
+
+.empty {
+  color: #8793a8;
+  text-align: center;
+  padding: 22px;
+}
+
+@media (max-width: 900px) {
+  .sidebar {
+    width: 195px;
+    padding: 18px 9px;
+  }
+
+  .main {
+    padding: 18px;
+  }
+
+  .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .rent-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .app {
+    display: block;
+  }
+
+  .sidebar {
+    width: 100%;
+    min-height: auto;
+    padding: 12px;
+  }
+
+  .sidebar h2 {
+    padding: 8px 5px 14px;
+    margin-bottom: 12px;
+  }
+
+  .menu-label {
+    padding-bottom: 5px;
+  }
+
+  .nav {
+    display: inline-block;
+    width: auto;
+    padding: 10px;
+    margin: 3px 1px;
+    font-size: 11px;
+  }
+
+  .main {
+    padding: 14px;
+  }
+
+  .topbar h2 {
+    font-size: 19px;
+  }
+
+  .topbar span {
+    font-size: 11px;
+    padding: 9px;
+  }
+
+  .cards {
+    gap: 10px;
+  }
+
+  .card {
+    padding: 16px 12px;
+  }
+
+  .card h2 {
+    font-size: 25px;
+  }
+
+  .rent-card h2 {
+    font-size: 22px;
+  }
+
+  .panel {
+    padding: 16px;
+  }
+
+  .form {
+    grid-template-columns: 1fr;
+  }
+
+  .form .full {
+    grid-column: auto;
+  }
+}
+
+/* ROOM MANAGEMENT DESIGN */
+
+.room-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+
+.room-heading h2 {
+  font-size: 23px;
+  margin-bottom: 8px;
+}
+
+.room-heading p {
+  color: #7b879b;
+  font-size: 13px;
+}
+
+.room-add-btn {
+  background: #315efb;
+  color: white;
+  border: 0;
+  border-radius: 8px;
+  padding: 13px 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.room-type-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.room-type-card {
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  border: 1px solid #e4eaf4;
+  box-shadow: 0 5px 20px #1b315014;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.room-type-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px #1b31501e;
+}
+
+.room-type-card > img {
+  display: block;
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+  background: #e9eef8;
+}
+
+.room-image-fallback {
+  display: none;
+  width: 100%;
+  height: 190px;
+  align-items: center;
+  justify-content: center;
+  font-size: 65px;
+  background: linear-gradient(135deg, #e6efff, #eee8ff);
+}
+
+.room-type-info {
+  padding: 18px;
+}
+
+.room-type-info h3 {
+  color: #1b2941;
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.room-type-info > p {
+  color: #8390a5;
+  font-size: 12px;
+  margin-bottom: 16px;
+}
+
+.room-type-stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 12px;
+  margin-bottom: 15px;
+}
+
+.available-text {
+  color: #159957;
+  font-weight: bold;
+}
+
+.room-type-info button {
+  width: 100%;
+  padding: 11px;
+  background: #eef2ff;
+  color: #315efb;
+  border: 0;
+  border-radius: 7px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.room-type-info button:hover {
+  background: #315efb;
+  color: white;
+}
+
+.room-form-panel {
+  scroll-margin-top: 15px;
+}
+
+@media (max-width: 520px) {
+  .room-type-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .room-type-card > img,
+  .room-image-fallback {
+    height: 210px;
+  }
+
+  .room-heading h2 {
+    font-size: 21px;
+  }
+
+  .room-add-btn {
+    width: 100%;
+  }
+}

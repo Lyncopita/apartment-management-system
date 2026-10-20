@@ -1,0 +1,10 @@
+
+{
+  "name": "Apartment Management System",
+  "short_name": "ApartmentPro",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f4f7fb",
+  "theme_color": "#17233b",
+  "description": "Manage apartment properties, rooms, tenants, and rent payments."
+}

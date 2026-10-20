@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#17233b">
+
+  <title>Apartment Management System</title>
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+
+<div class="app">
+  <aside class="sidebar">
+    <h2>🏠 ApartmentPro</h2>
+    <p class="menu-label">MAIN MENU</p>
+
+    <button class="nav active" onclick="showPage('Dashboard',this)">📊 Dashboard</button>
+    <button class="nav" onclick="showPage('My Profile',this)">👤 My Profile</button>
+    <button class="nav" onclick="showPage('Add Property',this)">🏢 Add Property</button>
+    <button class="nav" onclick="showPage('My Properties',this)">🏘️ My Properties</button>
+    <button class="nav" onclick="showPage('My Units',this)">🛏️ My Units</button>
+    <button class="nav" onclick="showPage('Tenants',this)">👥 Tenants</button>
+    <button class="nav" onclick="showPage('Assign Tenant',this)">📋 Assign Tenant</button>
+    <button class="nav" onclick="showPage('Rent Payments',this)">💵 Rent Payments</button>
+    <button class="nav" onclick="showPage('Rent History',this)">📜 Rent History</button>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div>
+        <small>APARTMENT MANAGEMENT SYSTEM</small>
+        <h2 id="page-title">Landlord Dashboard</h2>
+      </div>
+      <span>👤 Admin</span>
+    </header>
+
+    <section id="page-content">
+      <div class="cards">
+        <div class="card">
+          <p>Total Properties</p>
+          <h2 id="properties">0</h2>
+        </div>
+        <div class="card">
+          <p>Total Rooms</p>
+          <h2 id="rooms">0</h2>
+        </div>
+        <div class="card">
+          <p>Total Tenants</p>
+          <h2 id="tenants">0</h2>
+        </div>
+        <div class="card">
+          <p>Available Rooms</p>
+          <h2 id="available">0</h2>
+        </div>
+      </div>
+
+      <div class="rent-cards">
+        <div class="rent-card pending">
+          <p>Pending Rent</p>
+          <h2 id="pending">₱0.00</h2>
+        </div>
+        <div class="rent-card overdue">
+          <p>Overdue Rent</p>
+          <h2 id="overdue">₱0.00</h2>
+        </div>
+        <div class="rent-card collected">
+          <p>Collected Rent</p>
+          <h2 id="collected">₱0.00</h2>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Quick Actions</h3>
+        <div class="actions">
+          <button onclick="showPage('Add Property')">＋ Add Property</button>
+          <button onclick="showPage('My Units')">＋ Add Room</button>
+          <button onclick="showPage('Tenants')">＋ Add Tenant</button>
+          <button onclick="showPage('Rent Payments')">₱ Record Payment</button>
+        </div>
+        <p class="note">
+          Welcome to ApartmentPro. Manage your properties, rooms,
+          tenants and rent records in one place.
+        </p>
+      </div>
+
+      <div class="panel">
+        <h3>Recent Room Records</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Room No.</th>
+                <th>Type</th>
+                <th>Tenant</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="recent-rooms">
+              <tr>
+                <td colspan="4">No rooms added yet.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script src="script.js"></script>
+
+<script>
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", function () {
+      navigator.serviceWorker.register("./service-worker.js")
+        .catch(function (error) {
+          console.error("Service worker registration failed:", error);
+        });
+    });
+  }
+</script>
+
+</body>
+</html>
