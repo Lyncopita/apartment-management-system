@@ -529,3 +529,200 @@ function safe(value) {
 }
 
 renderDashboard();
+
+
+/* LOGIN, CREATE ACCOUNT AND LOGOUT
+   Demo authentication for GitHub Pages only.
+*/
+
+function getAccounts() {
+  try {
+    return JSON.parse(localStorage.getItem("apartmentAccounts") || "[]");
+  } catch {
+    return [];
+  }
+}
+
+function showAuthPage(mode, message = "") {
+  const app = document.querySelector(".app");
+  if (app) app.style.display = "none";
+
+  let auth = document.getElementById("auth-screen");
+
+  if (!auth) {
+    auth = document.createElement("div");
+    auth.id = "auth-screen";
+    document.body.prepend(auth);
+  }
+
+  const isRegister = mode === "register";
+
+  auth.innerHTML = `
+    <div class="auth-screen">
+      <div class="auth-card">
+        <h1>🏠 ApartmentPro</h1>
+        <p class="auth-subtitle">
+          ${isRegister ? "Create your account" : "Login to your account"}
+        </p>
+
+        <form class="auth-form"
+          onsubmit="${isRegister ? "createAccount(event)" : "loginAccount(event")}">
+
+          ${isRegister ? `
+            <div>
+              <label for="auth-name">Full Name</label>
+              <input id="auth-name" required maxlength="80"
+                autocomplete="name" placeholder="Enter your full name">
+            </div>
+
+            <div>
+              <label for="auth-email">Email</label>
+              <input id="auth-email" type="email" required
+                autocomplete="email" placeholder="Enter your email">
+            </div>
+          ` : ""}
+
+          <div>
+            <label for="auth-username">Username</label>
+            <input id="auth-username" required maxlength="40"
+              autocomplete="username" placeholder="Enter username">
+          </div>
+
+          <div>
+            <label for="auth-password">Password</label>
+            <input id="auth-password" type="password" required
+              minlength="6" autocomplete="${isRegister ? "new-password" : "current-password"}"
+              placeholder="Enter password">
+          </div>
+
+          ${isRegister ? `
+            <div>
+              <label for="auth-confirm">Confirm Password</label>
+              <input id="auth-confirm" type="password" required
+                minlength="6" autocomplete="new-password"
+                placeholder="Confirm password">
+            </div>
+          ` : ""}
+
+          <p class="auth-message" role="status">${message}</p>
+
+          <button type="submit">
+            ${isRegister ? "Create Account" : "Login"}
+          </button>
+        </form>
+
+        <p class="auth-switch">
+          ${isRegister
+            ? `Already have an account?
+              <button type="button" onclick="showAuthPage('login')">Login</button>`
+            : `Don't have an account?
+              <button type="button" onclick="showAuthPage('register')">Create Account</button>`}
+        </p>
+      </div>
+    </div>`;
+}
+
+function createAccount(event) {
+  event.preventDefault();
+
+  const name = document.getElementById("auth-name").value.trim();
+  const email = document.getElementById("auth-email").value.trim().toLowerCase();
+  const username = document.getElementById("auth-username").value.trim();
+  const password = document.getElementById("auth-password").value;
+  const confirmPassword = document.getElementById("auth-confirm").value;
+
+  if (password !== confirmPassword) {
+    showAuthPage("register", "Passwords do not match.");
+    return;
+  }
+
+  const accounts = getAccounts();
+
+  if (accounts.some(a =>
+    a.username.toLowerCase() === username.toLowerCase() ||
+    a.email === email
+  )) {
+    showAuthPage("register", "Username or email already exists.");
+    return;
+  }
+
+  accounts.push({ name, email, username, password });
+
+  try {
+    localStorage.setItem("apartmentAccounts", JSON.stringify(accounts));
+  } catch {
+    showAuthPage("register", "Could not save account in this browser.");
+    return;
+  }
+
+  showAuthPage("login", "Account created! Please log in.");
+}
+
+function loginAccount(event) {
+  event.preventDefault();
+
+  const username = document.getElementById("auth-username").value.trim();
+  const password = document.getElementById("auth-password").value;
+
+  const account = getAccounts().find(a =>
+    a.username.toLowerCase() === username.toLowerCase() &&
+    a.password === password
+  );
+
+  if (!account) {
+    showAuthPage("login", "Incorrect username or password.");
+    return;
+  }
+
+  sessionStorage.setItem("apartmentLoggedIn", "true");
+  sessionStorage.setItem("apartmentUser", account.name);
+
+  openApartmentDashboard(account.name);
+}
+
+function openApartmentDashboard(name) {
+  const auth = document.getElementById("auth-screen");
+  if (auth) auth.remove();
+
+  const app = document.querySelector(".app");
+  if (app) app.style.display = "flex";
+
+  const topbar = document.querySelector(".topbar");
+  if (topbar) {
+    let userArea = document.getElementById("auth-user-area");
+
+    if (!userArea) {
+      userArea = document.createElement("div");
+      userArea.id = "auth-user-area";
+      userArea.style.display = "flex";
+      userArea.style.alignItems = "center";
+      userArea.style.gap = "8px";
+      topbar.appendChild(userArea);
+    }
+
+    userArea.innerHTML = `
+      <span>👤 ${safe(name)}</span>
+      <button class="auth-logout" onclick="logoutAccount()">Logout</button>
+    `;
+  }
+
+  renderDashboard();
+}
+
+function logoutAccount() {
+  sessionStorage.removeItem("apartmentLoggedIn");
+  sessionStorage.removeItem("apartmentUser");
+  showAuthPage("login", "You have logged out.");
+}
+
+function initializeAuth() {
+  if (sessionStorage.getItem("apartmentLoggedIn") === "true") {
+    openApartmentDashboard(
+      sessionStorage.getItem("apartmentUser") || "User"
+    );
+  } else {
+    showAuthPage("login");
+  }
+}
+
+initializeAuth();
